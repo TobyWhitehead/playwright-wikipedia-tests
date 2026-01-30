@@ -1,7 +1,6 @@
 package steps;
 
 import base.TestContext;
-import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -13,6 +12,7 @@ public class WikipediaSteps {
     private final TestContext testContext;
     private HomePage homePage;
     private ArticlePage articlePage;
+    private String previousHeading;
 
     public WikipediaSteps(TestContext testContext) {
         this.testContext = testContext;
@@ -33,5 +33,24 @@ public class WikipediaSteps {
     public void theArticleHeadingShouldBe(String heading) {
         articlePage = new ArticlePage(testContext.getPage());
         articlePage.verifyHeading(heading);
+    }
+
+    @Given("I open the {string} article")
+    public void iOpenTheArticle(String article) {
+        homePage = new HomePage(testContext.getPage());
+        homePage.navigate();
+        homePage.searchFor(article);
+    }
+
+    @When("I click the first internal article link")
+    public void iClickTheFirstInternalArticleLink() {
+        articlePage = new ArticlePage(testContext.getPage());
+        previousHeading = articlePage.getHeadingText();
+        articlePage.clickFirstInternalLink();
+    }
+
+    @Then("I should be navigated to a different article")
+    public void iShouldBeNavigatedToADifferentArticle() {
+        articlePage.verifyArticleChanged(previousHeading);
     }
 }
