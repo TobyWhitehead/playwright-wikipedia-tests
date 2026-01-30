@@ -5,12 +5,14 @@ import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import pages.ArticlePage;
 import pages.HomePage;
 
 public class WikipediaSteps {
 
     private final TestContext testContext;
     private HomePage homePage;
+    private ArticlePage articlePage;
 
     public WikipediaSteps(TestContext testContext) {
         this.testContext = testContext;
@@ -29,8 +31,7 @@ public class WikipediaSteps {
 
     @Then("the article heading should be {string}")
     public void theArticleHeadingShouldBe(String heading) {
-        PlaywrightAssertions.assertThat(
-                testContext.getPage().locator("h1")
-                ).hasText(heading);
+        articlePage = new ArticlePage(testContext.getPage());
+        articlePage.verifyHeading(heading);
     }
 }
