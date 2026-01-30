@@ -4,12 +4,12 @@ import com.microsoft.playwright.*;
 
 public class PlaywrightFactory {
 
-    private static Playwright playwright;
-    private static Browser browser;
-    private static BrowserContext context;
-    private static Page page;
+    private Playwright playwright;
+    private Browser browser;
+    private BrowserContext context;
+    private Page page;
 
-    public static Page initBrowser(boolean headless) {
+    public Page initBrowser(boolean headless) {
         playwright = Playwright.create();
 
         browser = playwright.chromium().launch(
@@ -26,11 +26,7 @@ public class PlaywrightFactory {
         return page;
     }
 
-    public static Page getPage() {
-        return page;
-    }
-
-    public static void tearDown() {
+    public void tearDown() {
         if (context != null) context.close();
         if (browser != null) browser.close();
         if (playwright != null) playwright.close();

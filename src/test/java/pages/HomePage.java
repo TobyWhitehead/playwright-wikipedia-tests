@@ -1,6 +1,7 @@
 package pages;
 
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 
 public class HomePage {
 
@@ -15,8 +16,7 @@ public class HomePage {
     }
 
     public void searchFor(String text) {
-        page.getByRole(
-                com.microsoft.playwright.options.AriaRole.TEXTBOX)
+        page.getByLabel("Search Wikipedia")
                 .fill(text);
 
         page.keyboard().press("Enter");

@@ -5,25 +5,31 @@ import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 
-public class BaseTest {
+public class Hooks {
 
-    protected static Page page;
+    private final TestContext testContext;
+
+    public Hooks(TestContext testContext) {
+        this.testContext = testContext;
+    }
 
     @Before
     public void setUp() {
         boolean headless = Boolean.parseBoolean(
                 System.getProperty("headless", "false")
         );
-
-        page = PlaywrightFactory.initBrowser(headless);
+        testContext.init(headless);
     }
 
     @After
     public void tearDown(Scenario scenario) {
+        Page page = testContext.getPage();
+
         if (scenario.isFailed()) {
             byte[] screenshot = page.screenshot();
             scenario.attach(screenshot, "image/png", "Failure screenshot");
         }
-        PlaywrightFactory.tearDown();
+
+        testContext.tearDown();
     }
 }
