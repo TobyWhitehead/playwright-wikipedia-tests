@@ -1,5 +1,6 @@
 package base;
 
+import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 
 public class TestContext {
@@ -14,6 +15,10 @@ public class TestContext {
 
     public Page getPage() {
         return page;
+    }
+
+    public BrowserContext getBrowserContext() {
+        return playwrightFactory.getContext();
     }
 
     public void setPage(Page page) {
