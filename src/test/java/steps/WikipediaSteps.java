@@ -26,7 +26,7 @@ public class WikipediaSteps {
 
     @When("I search for {string}")
     public void iSearchFor(String term) {
-        homePage.searchFor(term);
+        homePage.getSearchBar().searchFor(term);
     }
 
     @Then("the article heading should be {string}")
@@ -39,7 +39,7 @@ public class WikipediaSteps {
     public void iOpenTheArticle(String article) {
         homePage = new HomePage(testContext.getPage());
         homePage.navigate();
-        homePage.searchFor(article);
+        homePage.getSearchBar().searchFor(article);
     }
 
     @When("I click the first internal article link")

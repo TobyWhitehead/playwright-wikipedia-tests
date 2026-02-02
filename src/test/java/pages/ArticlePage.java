@@ -3,10 +3,12 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import com.microsoft.playwright.options.AriaRole;
+import pages.components.SearchBar;
 
 public class ArticlePage {
 
     private final Page page;
+    private final SearchBar searchBar;
 
     // locators
     private final Locator articleHeading;
@@ -19,6 +21,7 @@ public class ArticlePage {
                 new Page.GetByRoleOptions().setLevel(1)
         );
         this.internalLinks = page.locator("#bodyContent a[href^=\"/wiki/\"]");
+        this.searchBar = new SearchBar(page);
     }
 
     public String getHeadingText() {
@@ -37,5 +40,9 @@ public class ArticlePage {
     public void verifyArticleChanged(String previousHeading) {
         PlaywrightAssertions.assertThat(articleHeading)
                 .not().hasText(previousHeading);
+    }
+
+    public SearchBar getSearchBar() {
+        return searchBar;
     }
 }
