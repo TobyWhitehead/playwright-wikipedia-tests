@@ -12,7 +12,15 @@ public class PlaywrightFactory {
     public Page initBrowser(boolean headless) {
         playwright = Playwright.create();
 
-        browser = playwright.chromium().launch(
+        String browserName = System.getProperty("browser", "chromium");
+
+        BrowserType browserType = switch (browserName.toLowerCase()) {
+            case "firefox" -> playwright.firefox();
+            case "webkit" -> playwright.webkit();
+            default -> playwright.chromium();
+        };
+
+        browser = browserType.launch(
                 new BrowserType.LaunchOptions()
                         .setHeadless(headless)
         );

@@ -10,6 +10,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [chromium, firefox]
 
     steps:
       - name: Checkout code
@@ -29,10 +32,10 @@ jobs:
           restore-keys: |
             maven-
 
-      - name: Run tests (headless)
-        run: mvn clean test -Dheadless=true
+      - name: Run smoke tests
+        run: mvn test -Dheadless=true -Dbrowser=${{ matrix.browser }} -Dcucumber.filter.tags="@smoke"
 
-      - name: Upload Cucumber report
+      - name: Upload artefacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
