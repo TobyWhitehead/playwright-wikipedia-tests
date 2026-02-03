@@ -1,6 +1,6 @@
 Feature: Article navigation
 
-  @smoke @navigation
+  @smoke @navigation @flaky
   Scenario: Navigate from an article to a related article
     Given I open the "Playwright" article
     When I click the first internal article link

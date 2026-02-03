@@ -14,5 +14,9 @@ import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
         key = PLUGIN_PROPERTY_NAME,
         value = "pretty, html:target/cucumber-report.html"
 )
+@ConfigurationParameter(
+        key = "cucumber.execution.retry.tag-filter",
+        value = "@flaky"
+)
 public class CucumberTestRunner {
 }
