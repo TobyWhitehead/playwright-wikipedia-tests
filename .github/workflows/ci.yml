@@ -32,7 +32,7 @@ jobs:
             maven-
 
       - name: Run smoke tests
-        run: mvn test -Dheadless=true -Dbrowser=${{ matrix.browser }} -Dcucumber.filter.tags=@smoke
+        run: mvn clean test -Dheadless=true -Dbrowser=${{ matrix.browser }}
 
       - name: Upload artefacts
         if: always()
