@@ -26,12 +26,6 @@ public class Hooks {
         testContext.init(browserName, headless);
 
         BrowserContext context = testContext.getBrowserContext();
-        context.tracing().start(
-                new Tracing.StartOptions()
-                        .setScreenshots(true)
-                        .setSnapshots(true)
-                        .setSources(true)
-                );
     }
 
     @After
@@ -39,7 +33,17 @@ public class Hooks {
         BrowserContext context = testContext.getBrowserContext();
         Page page = testContext.getPage();
 
+        context.tracing().start(
+                new Tracing.StartOptions()
+                        .setScreenshots(true)
+                        .setSnapshots(true)
+                        .setSources(true)
+        );
+
         if (scenario.isFailed()) {
+            byte[] screenshot = page.screenshot();
+            scenario.attach(screenshot, "image/png", "Failure screenshot");
+
             String traceName = scenario.getName()
                     .replaceAll("[^a-zA-Z0-9]", "_");
 
@@ -47,9 +51,6 @@ public class Hooks {
                     new Tracing.StopOptions()
                             .setPath(Paths.get("target/traces/" + traceName + ".zip"))
             );
-
-            byte[] screenshot = page.screenshot();
-            scenario.attach(screenshot, "image/png", "Failure screenshot");
         } else {
             context.tracing().stop();
         }
