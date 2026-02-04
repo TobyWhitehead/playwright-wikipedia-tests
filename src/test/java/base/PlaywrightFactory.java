@@ -7,7 +7,6 @@ public class PlaywrightFactory {
     private Playwright playwright;
     private Browser browser;
     private BrowserContext context;
-    private Page page;
 
     public Page initBrowser(boolean headless) {
         playwright = Playwright.create();
@@ -30,8 +29,7 @@ public class PlaywrightFactory {
                         .setViewportSize(1280, 800)
         );
 
-        page = context.newPage();
-        return page;
+        return context.newPage();
     }
 
     public BrowserContext getContext() {

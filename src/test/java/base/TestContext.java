@@ -5,29 +5,29 @@ import com.microsoft.playwright.Page;
 
 public class TestContext {
 
-    private PlaywrightFactory playwrightFactory;
-    private Page page;
+    private static final ThreadLocal<PlaywrightFactory> factory = new ThreadLocal<>();
+
+    private static final ThreadLocal<Page> page = new ThreadLocal<>();
 
     public void init(boolean headless) {
-        playwrightFactory = new PlaywrightFactory();
-        page = playwrightFactory.initBrowser(headless);
+        PlaywrightFactory playwrightFactory = new PlaywrightFactory();
+        factory.set(playwrightFactory);
+        page.set(playwrightFactory.initBrowser(headless));
     }
 
     public Page getPage() {
-        return page;
+        return page.get();
     }
 
     public BrowserContext getBrowserContext() {
-        return playwrightFactory.getContext();
-    }
-
-    public void setPage(Page page) {
-        this.page = page;
+        return factory.get().getContext();
     }
 
     public void tearDown() {
-        if (playwrightFactory != null) {
-            playwrightFactory.tearDown();
+        if (factory.get() != null) {
+            factory.get().tearDown();
         }
+        page.remove();
+        factory.remove();
     }
 }
