@@ -18,5 +18,5 @@ import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
         key = "cucumber.execution.retry.tag-filter",
         value = "@flaky"
 )
-public class CucumberTestRunner {
+public class CucumberTest {
 }
