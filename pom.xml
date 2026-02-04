@@ -14,7 +14,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <cucumber.version>7.15.0</cucumber.version>
-        <playwright.version>1.42.0</playwright.version>
+        <playwright.version>1.44.0</playwright.version>
     </properties>
 
     <dependencies>
