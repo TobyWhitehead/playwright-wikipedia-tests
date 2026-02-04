@@ -26,8 +26,14 @@ public class PlaywrightFactory {
                 new Browser.NewContextOptions()
                         .setViewportSize(1280, 800)
         );
-
-        return context.newPage();
+        Page page;
+        try {
+            page = context.newPage();
+        } catch (Exception e) {
+            System.err.println("Failed to create page: " + e.getMessage());
+            throw e;
+        }
+        return page;
     }
 
     public BrowserContext getContext() {
@@ -38,9 +44,5 @@ public class PlaywrightFactory {
         if (context != null) context.close();
         if (browser != null) browser.close();
         if (playwright != null) playwright.close();
-
-        context = null;
-        browser = null;
-        playwright = null;
     }
 }
