@@ -9,11 +9,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.48.0-focal
     strategy:
       matrix:
-        browser: [chromium, webkit]
+        browser: [chromium, firefox]
 
     steps:
       - name: Checkout code
