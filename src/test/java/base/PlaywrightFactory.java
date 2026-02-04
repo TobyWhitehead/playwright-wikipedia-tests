@@ -8,10 +8,8 @@ public class PlaywrightFactory {
     private Browser browser;
     private BrowserContext context;
 
-    public Page initBrowser(boolean headless) {
+    public Page initBrowser(String  browserName, boolean headless) {
         playwright = Playwright.create();
-
-        String browserName = System.getProperty("browser", "chromium");
 
         BrowserType browserType = switch (browserName.toLowerCase()) {
             case "firefox" -> playwright.firefox();
@@ -40,5 +38,9 @@ public class PlaywrightFactory {
         if (context != null) context.close();
         if (browser != null) browser.close();
         if (playwright != null) playwright.close();
+
+        context = null;
+        browser = null;
+        playwright = null;
     }
 }

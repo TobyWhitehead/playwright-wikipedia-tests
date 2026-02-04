@@ -8,9 +8,9 @@ public class TestContext {
     private PlaywrightFactory playwrightFactory;
     private Page page;
 
-    public void init(boolean headless) {
+    public void init(String browserName, boolean headless) {
         playwrightFactory = new PlaywrightFactory();
-        page = playwrightFactory.initBrowser(headless);
+        page = playwrightFactory.initBrowser(browserName, headless);
     }
 
     public Page getPage() {

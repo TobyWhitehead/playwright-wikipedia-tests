@@ -19,10 +19,11 @@ public class Hooks {
 
     @Before
     public void setUp() {
+        String browserName = System.getProperty("browser", "chromium");
         boolean headless = Boolean.parseBoolean(
                 System.getProperty("headless", "false")
         );
-        testContext.init(headless);
+        testContext.init(browserName, headless);
 
         BrowserContext context = testContext.getBrowserContext();
         context.tracing().start(
